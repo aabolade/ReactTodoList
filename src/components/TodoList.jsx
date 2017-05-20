@@ -7,10 +7,18 @@ export default class TodoList extends React.Component {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
+  getItems() {
+    if (this.props.todos) {
+      return this.props.todos.filter(
+        (item) => item.get('status') === this.props.filter
+      );
+    }
+    return [];
+  }
   render() {
     return <section className="main">
       <ul className="todo-list">
-        {this.props.todos.map(item =>
+        {this.getItems().map(item =>
           <TodoItem key={item.get('text')}
                     text={item.get('text')} />
         )}
