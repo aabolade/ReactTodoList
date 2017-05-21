@@ -7,6 +7,9 @@ export default class TodoList extends React.Component {
     super(props);
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
+  isCompleted(item) {
+    return item.get('status') === 'completed';
+  }
   getItems() {
     if (this.props.todos) {
       return this.props.todos.filter(
@@ -20,7 +23,9 @@ export default class TodoList extends React.Component {
       <ul className="todo-list">
         {this.getItems().map(item =>
           <TodoItem key={item.get('text')}
-                    text={item.get('text')} />
+                    text={item.get('text')}
+                    isCompleted={this.isCompleted(item)}
+                    isEditing={item.get('editing')} />
         )}
       </ul>
     </section>

@@ -3,7 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import TodoItem from '../../src/components/TodoItem';
 import {expect} from 'chai';
 
-const {renderIntoDocument, scryRenderedDOMComponentsWithTag} = TestUtils;
+const {renderIntoDocument, scryRenderedDOMComponentsWithTag, Simulate} = TestUtils;
 
 describe('TodoItem', () => {
   it('renders an item', () => {
@@ -35,5 +35,31 @@ describe('TodoItem', () => {
     const todo = scryRenderedDOMComponentsWithTag(component, 'li');
 
     expect(todo[0].classList.contains('editing')).to.equal(true);
+  });
+
+  it('should be checked if the item is completed', () => {
+    const text = 'React';
+    const text2 = 'Redux';
+    const component = renderIntoDocument(
+      <TodoItem text={text} isCompleted={true} />,
+      <TodoItem text={text2} isCompleted={false} />
+    );
+    const input = scryRenderedDOMComponentsWithTag(component, 'input');
+    expect(input[0].checked).to.equal(true);
+    expect(input[1].checked).to.equal(false);
+  });
+
+  it('invokes a callback when delete button is clicked', () => {
+    const text = 'React';
+    var deleted = false;
+    const deleteItem = () => deleted = true;
+    const component = renderIntoDocument(
+      <TodoItem text={text} deleteItem={deleteItem} />
+    );
+
+    const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+    Simulate.click(buttons[0])
+
+    expect(deleted).to.equal(true);
   });
 });
