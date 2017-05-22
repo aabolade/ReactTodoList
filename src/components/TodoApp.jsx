@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TodoList from './TodoList';
+import * as actionCreators from '../action_creators';
 
 export default class TodoApp extends React.Component {
   render() {
     return <div>
       <section className="todoapp">
-        <TodoList todos={this.props.todos} filter={this.props.filter} />
+        <TodoList {...this.props} />
       </section>
     </div>
   }
@@ -19,4 +20,4 @@ function mapStateToProps(state) {
   };
 }
 
-export const TodoAppContainer = connect(mapStateToProps)(TodoApp);
+export const TodoAppContainer = connect(mapStateToProps, actionCreators)(TodoApp);
