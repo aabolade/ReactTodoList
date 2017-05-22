@@ -8,7 +8,11 @@ export default class TodoApp extends React.Component {
     return <div>
       <section className="todoapp">
         <TodoList {...this.props} />
+        <TodoTools changeFilter={this.props.changeFilter}
+                    filter={this.props.filter}
+                    nbActiveItems={this.getNbActiveItems()} />
       </section>
+      <Footer />
     </div>
   }
 };
