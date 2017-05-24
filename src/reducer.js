@@ -47,6 +47,28 @@ function doneEditing(state, itemId, newText) {
   return state.update('todos', todos => todos.set(itemIndex, updatedItem));
 }
 
+function clearCompleted(state) {
+  return state.update('todos',
+  (todos) => todos.filterNot(
+    (item) => item.get('status') === 'completed'
+  )
+);
+}
+
+function deleteItem(state, itemId) {
+  return state.update('todos',
+  (todos) => todos.filterNot(
+    (item) => item.get('id') === itemId
+  )
+);
+}
+
+function addItem(state, text) {
+  const itemId = state.get('todos').reduce((maxId, item) => Math.max(maxId, item.get('id')), 0) + 1;
+  const newItem = Map({id: itemId, text: text, status: 'active'});
+  return state.update('todos', (todos) => todos.push(newItem));
+}
+
 function changeFilter(state, filter) {
   return state.set('filter', filter);
 }
@@ -65,6 +87,12 @@ export default function (state = Map(), action) {
       return cancelEditing(state, action.itemId);
     case 'DONE_EDITING':
       return doneEditing(state, action.itemId, action.newText);
+    case 'CLEAR_COMPLETED':
+      return clearCompleted(state);
+    case 'DELETE_ITEM':
+      return deleteItem(state, action.itemId);
+    case 'ADD_ITEM':
+      return addItem(state, action.text);
   }
   return state;
 }
