@@ -42,7 +42,7 @@ export function clearCompleted() {
 
 export function addItem(text) {
   return {
-    tye: 'ADD_ITEM',
+    type: 'ADD_ITEM',
     text
   }
 }

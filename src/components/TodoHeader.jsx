@@ -18,7 +18,7 @@ export default React.createClass({
         autofocus
         autoComplete="off"
         placeholder="what needs to be done?"
-        onkeyPress={this._handleKeyPress} />
+        onKeyPress={this._handleKeyPress} />
     </header>
   }
 });
